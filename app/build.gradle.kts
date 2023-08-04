@@ -69,6 +69,7 @@ dependencies {
 
 
 
+    implementation("androidx.lifecycle:lifecycle-extensions:2.2.0")
 
     implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version")
     implementation ("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version")

@@ -14,6 +14,8 @@ import com.example.kotlincountry.R
 import com.example.kotlincountry.adapter.CountryAdapter
 import com.example.kotlincountry.databinding.FragmentCountryBinding
 import com.example.kotlincountry.databinding.FragmentFeedBinding
+import com.example.kotlincountry.util.downnloadFromUrl
+import com.example.kotlincountry.util.placeholderProgressBar
 import com.example.kotlincountry.viewmodel.CountryViewModel
 import com.example.kotlincountry.viewmodel.FeedViewModel
 
@@ -45,22 +47,17 @@ class CountryFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
-        viewModel = ViewModelProvider(this)[CountryViewModel::class.java]
-        viewModel.getDataFromRoom()
-
-
-
-        observeLiveData()
-
-
-
-
         arguments?.let {
             countryUuid = CountryNavigationArgs.fromBundle(it).countryUuid
 
 
         }
+        viewModel = ViewModelProvider(this)[CountryViewModel::class.java]
+        viewModel.getDataFromRoom(countryUuid)
+
+
+        observeLiveData()
+
     }
 
    private fun observeLiveData(){
@@ -72,6 +69,10 @@ class CountryFragment : Fragment() {
                 binding.countryCurrency.text = country.countryCurrency
                 binding.countryLanguage.text = country.countryLanguage
                 binding.countryRegion.text = country.countryRegion
+                context?.let {
+                    binding.countryImage.downnloadFromUrl(country.imageUrl, placeholderProgressBar(it))
+
+                }
 
 
 
